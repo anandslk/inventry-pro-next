@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "../lib/supabase";
+import { supabase } from "../utils/supabase/client";
 import { AlertTriangle, Package, History } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 

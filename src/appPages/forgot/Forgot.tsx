@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Package } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import Link from "next/link";
 
 function ForgotPassword() {

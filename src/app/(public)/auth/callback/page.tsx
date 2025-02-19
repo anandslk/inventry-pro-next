@@ -1,4 +1,4 @@
-import AuthCallback from "@/pages/Callback";
+import AuthCallback from "@/appPages/Callback";
 
 const AuthCallbackPage = () => {
   return <AuthCallback />;

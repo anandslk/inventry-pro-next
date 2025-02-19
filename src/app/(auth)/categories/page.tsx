@@ -1,4 +1,4 @@
-import Categories from "@/pages/Categories";
+import Categories from "@/appPages/Categories";
 import React from "react";
 
 const CategoriesPage = () => {

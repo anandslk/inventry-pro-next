@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import { useMutation } from "@tanstack/react-query";
 import { Package } from "lucide-react";
 import { FormEvent, useState } from "react";

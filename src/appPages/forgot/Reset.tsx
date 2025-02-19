@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { Package } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import classNames from "classnames";
 import bcrypt from "bcryptjs";
 import { CircularProgress } from "@mui/material";

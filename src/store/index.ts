@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook } from "react-redux";
 import { storeData } from "./reducers/sd";
-import { env } from "@/lib/env";
+import { env } from "@/utils/env";
 
 const reducer = {
   storeData,

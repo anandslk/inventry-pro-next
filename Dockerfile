@@ -1,5 +1,6 @@
 # Use an official Node.js runtime as a parent image
-FROM node:lts-alpine
+# FROM node:lts-alpine
+FROM node:22-alpine
 
 # Set the working directory in the container
 WORKDIR /app
@@ -17,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port the app will run on
-EXPOSE 3007
+EXPOSE 3000
 
 # Command to run the application
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "start"]
