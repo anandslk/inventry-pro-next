@@ -2,21 +2,18 @@ import { LayoutDashboard, Package, List, History, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import classNames from "classnames";
 import { useAppSelector } from "@/store";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Spinner } from "./Loader";
 
 export default function Navbar() {
   const user = useAppSelector((state) => state.storeData.user);
 
-  const { signOut } = useAuth();
+  const { signoutMutation } = useAuth();
 
-  const router = useRouter();
   const pathname = usePathname();
 
-  const handleSignOut = async () => {
-    await signOut();
-    router.push("/login");
-  };
+  const handleSignOut = async () => signoutMutation.mutate();
 
   const active = (path: string) => ({ "text-indigo-600": pathname === path });
 
@@ -26,6 +23,8 @@ export default function Navbar() {
     <nav className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
+          {signoutMutation.isPending && <Spinner />}
+
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center space-x-2">
               <Package className="h-6 w-6 text-indigo-600" />

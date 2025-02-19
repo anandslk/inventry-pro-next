@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Package } from "lucide-react";
 import { storeUserData } from "@/store/reducers/sd";
 import { useDispatch } from "react-redux";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import { CircularProgress } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import { useMutation } from "@tanstack/react-query";

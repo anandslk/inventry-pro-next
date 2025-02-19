@@ -1,11 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/client";
 import { storeUserData } from "@/store/reducers/sd";
 import bcrypt from "bcryptjs";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const signIn = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -127,12 +130,18 @@ export const useAuth = () => {
 
   const user = useQuery({ queryKey: ["session"], queryFn: getSession });
 
+  const signoutMutation = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => router.push("/login"),
+    onError: (error) => toast.error(error.message || "Please try again"),
+  });
+
   return {
     signIn,
     signUp,
-    signOut,
     user,
     getSession,
     getExistingUser,
+    signoutMutation,
   };
 };

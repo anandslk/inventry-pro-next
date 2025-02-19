@@ -1,18 +1,27 @@
 {
-  "name": "edanext",
+  "name": "inventory-management-system",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:ignore": "NEXT_IGNORE_TYPECHECK=true next build",
     "start": "next start",
     "lint": "next lint",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:push": "supabase db push",
+    "compose:up": "docker compose up",
+    "compose:down": "docker compose down",
+    "compose:build": "docker compose up --build",
+    "compose:watch": "docker compose watch",
     "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.4.3",
+    "@mui/material": "^6.4.4",
     "@reduxjs/toolkit": "^2.5.1",
+    "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
@@ -22,16 +31,17 @@
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.4.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
-    "supabase": "^2.9.6"
+    "supabase": "^2.12.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
-    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/postcss": "^4.0.6",
     "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
@@ -43,9 +53,9 @@
     "@types/react-redux": "^7.1.34",
     "@types/redux": "^3.6.0",
     "@types/redux-logger": "^3.0.13",
-    "globals": "^15.14.0",
-    "prettier": "^3.5.0",
-    "sass": "^1.84.0",
+    "globals": "^15.15.0",
+    "prettier": "^3.5.1",
+    "sass": "^1.85.0",
     "tailwindcss": "^4.0.6"
   }
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../utils/supabase/client";
 import { Package, Edit, Trash2 } from "lucide-react";
 import AddEditProductModal from "../components/AddEditProductModal";
 

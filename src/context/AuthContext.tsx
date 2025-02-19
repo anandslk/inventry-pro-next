@@ -1,20 +1,17 @@
 "use client";
 
+import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import { Spinner } from "@/components/Loader";
 import { useAuth } from "@/hooks/useAuth";
 import { useAppSelector } from "@/store";
-import { ReactNode } from "react";
-import { useRouter } from "next/navigation";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const userData = useAppSelector((state) => state.storeData.user);
 
-  const router = useRouter();
-
   if (user.isPending) return <Spinner />;
-  if (!userData) router.push("/login");
+  if (!userData) return <Spinner />;
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -1,4 +1,4 @@
-import ResetPassword from "@/pages/forgot/Reset";
+import ResetPassword from "@/appPages/forgot/Reset";
 import React from "react";
 
 const ResetPasswordPage = () => {

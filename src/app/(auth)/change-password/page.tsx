@@ -1,4 +1,4 @@
-import ChangePassword from "@/pages/ChangePassword";
+import ChangePassword from "@/appPages/ChangePassword";
 import React from "react";
 
 const ChangePasswordPage = () => {
