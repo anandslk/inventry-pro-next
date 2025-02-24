@@ -1,12 +1,13 @@
 "use client";
 
-import { supabase } from "@/utils/supabase/client";
 import { useMutation } from "@tanstack/react-query";
 import { Package } from "lucide-react";
 import { FormEvent, useState } from "react";
 import classNames from "classnames";
 import { useAppSelector } from "@/store";
 import { CircularProgress } from "@mui/material";
+import { client } from "@/lib/rpc";
+import { PassReqType, PassResType } from "@/lib/rpc/types";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState("");
@@ -18,32 +19,24 @@ const ChangePassword = () => {
 
   const user = useAppSelector((state) => state.storeData.user?.user);
 
-  const updatePassword = async () => {
-    if (!user?.email) return;
+  const updatePassword = async (json: PassReqType): Promise<PassResType> => {
+    const res = await client.api.password.update["$post"]({ json });
+    const data = await res.json();
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: user?.email,
-      password: currPassword,
-    });
-
-    if (error) throw new Error(error.message);
-
-    const { data, error: updateError } = await supabase.auth.updateUser({
-      password: password,
-    });
-
-    if (updateError) throw new Error(updateError.message);
+    if (!res.ok) {
+      throw new Error(data.message || "API Error");
+    }
 
     return data;
   };
 
   const { mutate, isPending } = useMutation({
     mutationFn: updatePassword,
-    onSuccess: () => {
+    onSuccess: (res) => {
       setPassword("");
       setCurrPassword("");
       setRePassword("");
-      setSuccess("Password changed successfully");
+      setSuccess(res.message || "Password changed successfully");
     },
     onError: (error: Error) => setError(`Error: ${error.message}`),
   });
@@ -57,7 +50,13 @@ const ChangePassword = () => {
     setSuccess("");
     setError("");
 
-    mutate();
+    if (!user?.email) return;
+
+    mutate({
+      email: user.email,
+      password: currPassword,
+      newPassword: password,
+    });
   }
 
   return (

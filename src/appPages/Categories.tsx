@@ -5,6 +5,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../utils/supabase/client";
 import { Folder, Edit, Trash2 } from "lucide-react";
 import AddEditCategoryModal from "../components/AddEditCategoryModal";
+import { client } from "@/lib/rpc";
+import { GetCatResType } from "@/lib/rpc/types";
 
 interface Category {
   id: string;
@@ -21,24 +23,18 @@ export default function Categories() {
   );
   const [localError, setLocalError] = useState("");
 
-  const fetchCategories = async (): Promise<Category[]> => {
-    const { data, error } = await supabase
-      .from("categories")
-      .select("*")
-      .order("name");
-
-    if (error) throw error;
-    return data || [];
-  };
-
   const {
     data: categories,
     isPending,
     isError,
     error: queryError,
-  } = useQuery<Category[], Error>({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
+  } = useQuery<GetCatResType, Error>({
+    queryKey: ["getData"],
+    queryFn: async () => {
+      const res = await client.api.categories.get["$get"]();
+
+      return await res.json();
+    },
   });
 
   const deleteMutation = useMutation({
@@ -97,7 +93,7 @@ export default function Categories() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories?.map((category) => (
+        {categories?.data?.map((category) => (
           <div key={category.id} className="bg-white rounded-lg shadow p-6">
             <div className="flex items-start justify-between">
               <div className="flex items-center space-x-3">
