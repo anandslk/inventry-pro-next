@@ -3,6 +3,7 @@ import { handle } from "hono/vercel";
 import { categories } from "../routes/categories.routes";
 import { changePassword } from "../routes/password.routes";
 import { authenticate } from "../middlewares/auth.middleware";
+import { rateLimit } from "../middlewares/ratelimit.middleware";
 
 const app = new Hono().basePath("/api");
 
@@ -14,6 +15,7 @@ app.onError((err, c) => {
 });
 
 app.use("*", authenticate);
+app.use("*", rateLimit);
 
 const routes = app
   .route("/categories", categories)

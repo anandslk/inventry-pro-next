@@ -28,7 +28,7 @@ export default function Categories() {
     isPending,
     isError,
     error: queryError,
-  } = useQuery<GetCatResType, Error>({
+  } = useQuery<GetCatResType, Error, { data: Category[] }>({
     queryKey: ["getData"],
     queryFn: async () => {
       const res = await client.api.categories.get["$get"]();
@@ -93,37 +93,39 @@ export default function Categories() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories?.data?.map((category) => (
-          <div key={category.id} className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center space-x-3">
-                <Folder className="h-6 w-6 text-indigo-600" />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {category.name}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {category.description}
-                  </p>
+        {Array.isArray(categories?.data) &&
+          categories?.data?.map((category) => (
+            <div key={category.id} className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center space-x-3">
+                  <Folder className="h-6 w-6 text-indigo-600" />
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      {category.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {category.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(category)}
+                    className="text-gray-400 hover:text-indigo-600"
+                  >
+                    <Edit className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(category.id)}
+                    className="text-gray-400 hover:text-red-600"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
                 </div>
               </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => handleEdit(category)}
-                  className="text-gray-400 hover:text-indigo-600"
-                >
-                  <Edit className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={() => handleDelete(category.id)}
-                  className="text-gray-400 hover:text-red-600"
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
-              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       <AddEditCategoryModal
